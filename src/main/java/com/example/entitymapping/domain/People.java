@@ -16,10 +16,6 @@ public class People {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
-
-    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "address_id", referencedColumnName = "add_id")
-    @PrimaryKeyJoinColumn
-    private Address address;
-
+    @Column(name = "address_id")
+    Long addresses;
 }

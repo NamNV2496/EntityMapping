@@ -1,13 +1,7 @@
 package com.example.entitymapping.controller;
 
-import com.example.entitymapping.domain.Address;
-import com.example.entitymapping.domain.AddressOneToMany;
-import com.example.entitymapping.domain.People;
-import com.example.entitymapping.domain.PeopleManyToOne;
-import com.example.entitymapping.repository.AddressOneToManyRepository;
-import com.example.entitymapping.repository.AddressRepository;
-import com.example.entitymapping.repository.PeopleManyToOneRepository;
-import com.example.entitymapping.repository.PeopleRepository;
+import com.example.entitymapping.domain.*;
+import com.example.entitymapping.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,17 +16,23 @@ public class TestController {
     private final AddressRepository addressRepository;
     private final AddressOneToManyRepository addressOneToManyRepository;
     private final PeopleManyToOneRepository peopleManyToOneRepository;
+    private final AddressOneToOneRepository addressOneToOneRepository;
 
     @GetMapping("/createData")
     public void createData() {
-        peopleRepository.save(People.builder().name("test1").build());
+        peopleRepository.save(PeopleOneToOne.builder().name("test1").build());
         addressRepository.save(Address.builder().street("Lang").born("HN").build());
         addressRepository.save(Address.builder().street("Cau Giay").born("HN").build());
     }
 
     @GetMapping("/oneToOne")
-    public People oneToOne() {
-        return peopleRepository.findById(1L).get();
+    public List<PeopleOneToOne> oneToOne() {
+        return peopleRepository.findAll();
+    }
+
+    @GetMapping("/oneToOne2")
+    public List<AddressOneToOne> oneToOne2() {
+        return addressOneToOneRepository.findAll();
     }
 
     @GetMapping("/oneToMany")
