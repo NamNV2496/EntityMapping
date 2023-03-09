@@ -21,6 +21,7 @@ public class AddressOneToMany {
     String street;
     String born;
     // mapping with column address_id in people table
+//    PeopleOneToMany giống hệt people (ko sửa gì)
     @OneToMany(mappedBy = "addresses")
     private List<PeopleOneToMany> people;
 }

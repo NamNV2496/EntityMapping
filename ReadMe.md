@@ -27,8 +27,7 @@ public class Address {
   String born;
 }
 ```
-![img.png](img.png)
-![img_1.png](img_1.png)
+![img_6.png](img_6.png)
 
 ## Call OneToOne from people
 
@@ -64,6 +63,31 @@ because address doesn't have people_id column. So it will map with address by ad
 It means address id 1 will map with people id 1.
 
 It cannot redirect to another id. it means if people doesn't have id 1 so address id 1 will have data in people property is null
+
+```java
+@Table(name = "address")
+public class AddressOneToOne {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "add_id")
+    Long id;
+    String street;
+    String born;
+
+    @OneToOne
+    private People people;
+}
+@Table(name = "people")
+public class People {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String name;
+    @Column(name = "address_id")
+    Long addresses;
+}
+```
 
 
     GET http://localhost:8080/oneToOne2
@@ -105,8 +129,9 @@ INSERT INTO db_example.address (add_id,born,street) VALUES
 
 
 ```
-![img_3.png](img_3.png)
+![img_7.png](img_7.png)
 
+## => Vậy nên ta sẽ đứng từ phía `address` để gọi
 
 ![img_4.png](img_4.png)
 
@@ -189,6 +214,10 @@ INSERT INTO db_example.address (add_id,born,street) VALUES
 
 
 ```
+![img_8.png](img_8.png)
+
+## => Vậy nên ta sẽ đứng từ phía `people` để gọi
+
 ![img_5.png](img_5.png)
 
 only need define in n side
@@ -197,6 +226,31 @@ only need define in n side
     @JoinColumn(name = "address_id", referencedColumnName = "add_id")
     Address addresses;
 
+```java
+@Table(name = "people")
+public class PeopleManyToOne {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String name;
+
+    @ManyToOne
+    @JoinColumn(name = "address_id", referencedColumnName = "add_id")
+    Address addresses;
+}
+
+@Table(name = "address")
+public class Address {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "add_id")
+    Long id;
+    String street;
+    String born;
+}
+
+```
 
 ## Request
 
