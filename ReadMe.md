@@ -278,3 +278,31 @@ public class Address {
     }
 ]
 ```
+
+
+# With report we can create a Views to collage information from many table
+
+```sql
+    CREATE VIEW view_name AS
+    SELECT columns
+    FROM tables
+    [WHERE conditions];
+Example:
+
+    CREATE VIEW view_name AS
+    SELECT pp.id, pp.name, ad.born, ad.street
+    FROM people pp left join address ad on pp.address_id = ad.add_id 
+```
+  
+### Create entity normally
+
+![img_9.png](img_9.png)
+
+### And create a repository and access with method name normally
+
+![img_10.png](img_10.png)
+
+## The result
+
+![img_11.png](img_11.png)
+
