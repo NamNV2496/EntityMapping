@@ -1,3 +1,15 @@
+```sql
+INSERT INTO db_example.people (id, name,address_id) VALUES
+	 (1, 'test1',2),
+	 (2, 'test2',2);
+INSERT INTO db_example.address (add_id,born,street) VALUES
+    (3,'HN','Lang'),
+    (2,'HN','Cau Giay');
+
+
+```
+
+
 # @OneToOne
 
 ```java
@@ -44,7 +56,11 @@ Result:
     {
         "id": 1,
         "name": "test1",
-        "address": null
+        "address": {
+          "id": 2,
+          "street": "Cau Giay",
+          "born": "HN"
+        }
     },
     {
         "id": 2,
@@ -101,9 +117,9 @@ Result:
     "street": "Cau Giay",
     "born": "HN",
     "people": {
-      "id": 2,
+      "id": 2, // mapping id 2 of address with id 2 of people, although in people size: people id 2 map with address id 1
       "name": "test2",
-      "addresses": 2
+      "addresses": 1
     }
   },
   {
