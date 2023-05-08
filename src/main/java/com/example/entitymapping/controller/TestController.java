@@ -17,6 +17,7 @@ public class TestController {
     private final AddressOneToManyRepository addressOneToManyRepository;
     private final PeopleManyToOneRepository peopleManyToOneRepository;
     private final AddressOneToOneRepository addressOneToOneRepository;
+    private final AddressOneToOneWay2Repository addressOneToOneWay2Repository;
 
     @GetMapping("/createData")
     public void createData() {
@@ -46,4 +47,12 @@ public class TestController {
     public List<PeopleManyToOne> manyToOne() {
         return peopleManyToOneRepository.findAll();
     }
+
+    @GetMapping("/oneToOneWay2")
+    public List<AddressOneToOne2> oneToOneWay2() {
+        return addressOneToOneWay2Repository.findAll();
+    }
+
+
+
 }

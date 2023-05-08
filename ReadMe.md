@@ -9,6 +9,7 @@ INSERT INTO db_example.address (add_id,born,street) VALUES
 
 ```
 
+![img_12.png](img_12.png)
 
 # @OneToOne
 
@@ -105,10 +106,9 @@ public class People {
 }
 ```
 
-
     GET http://localhost:8080/oneToOne2
 
-Result:
+### Result:
 
 ```json
 [
@@ -131,6 +131,93 @@ Result:
 ]
 ```
 
+## How to resolve it
+
+create an object in people with @OneToOne relationship with address
+```java
+@Table(name = "people")
+public class PeopleOneToOne2 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String name;
+
+    @ToString.Exclude
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "add_id")
+    private Address addressOne;
+}
+```
+
+Use @OneToOne mapper to link from address corresponding with object `addressOne` in people
+
+```java
+@Table(name = "address")
+public class AddressOneToOne2 {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "add_id")
+    Long id;
+    String street;
+    String born;
+
+    @OneToOne(mappedBy = "addressOne")
+    private PeopleOneToOne2 people;
+}
+```
+Request:
+
+    GET http://localhost:8080/oneToOneWay2
+
+### Result:
+
+```json
+[
+  {
+    "id": 1,
+    "street": "TAN binh",
+    "born": "HCM",
+    "people": {
+      "id": 2,
+      "name": "test2",
+      "addressOne": {
+        "id": 1,
+        "street": "TAN binh",
+        "born": "HCM"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "street": "Cau Giay",
+    "born": "HN",
+    "people": {
+      "id": 1,
+      "name": "test1",
+      "addressOne": {
+        "id": 2,
+        "street": "Cau Giay",
+        "born": "HN"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "street": "Dong Da",
+    "born": "HN",
+    "people": {
+      "id": 3,
+      "name": "test3",
+      "addressOne": {
+        "id": 3,
+        "street": "Dong Da",
+        "born": "HN"
+      }
+    }
+  }
+]
+```
 
 # @OneToMany
 
